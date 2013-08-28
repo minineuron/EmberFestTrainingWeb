@@ -9,16 +9,15 @@
     <script type="text/javascript" charset="utf-8" src="js/scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/scripts/handlebars.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/scripts/ember-1.0.0-rc.7.js"></script>
-
-    <script type="text/javascript">
-    	var LDDB = Ember.Application.create();
-    </script>
+    <script type="text/javascript" charset="utf-8" src="js/scripts/app.js"></script>
 
 
     <script type="text/x-handlebars" id="application">
     	{{render header}}
     	<div id="mainArea" class="pageContent">
-    		Body content
+    		<div class="row">
+                {{outlet}}
+    		</div>
     	</div>
 
     </script>
@@ -31,6 +30,38 @@
 
     	</div>
 
+    </script>
+    <script type="text/x-handlebars" id="buckets">
+        <div class="col-md-4">
+            <h1>Buckets</h1>
+            <div class="list-group">
+                {{#each controller}}
+                    {{#linkTo "bucket" this class="list-group-item"}}
+                        <div>{{id}}</div>
+                    {{/linkTo}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="col-md-8">
+            {{outlet}}
+        </div>
+    </script>
+
+
+    <script type="text/x-handlebars" id="bucket">
+        <div class="row">
+            <div class="col-md-4">
+                <h1>{{id}}</h1>
+                <div class="list-group">
+                    {{#each key_ids}}
+                        <div class="list-group-item">{{this}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="col-md-8">
+                {{outlet}} KEY PART
+            </div>
+        </div>
     </script>
 
 </head>
