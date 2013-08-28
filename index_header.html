@@ -53,15 +53,27 @@
             <div class="col-md-4">
                 <h1>{{id}}</h1>
                 <div class="list-group">
-                    {{#each key_ids}}
-                        <div class="list-group-item">{{this}}</div>
+                    {{log keys}}
+                    {{#each key in keys}}
+                        {{#linkTo "bucket.key" key class="list-group-item"}}
+                            <div>{{key.keyName}}</div>
+                        {{/linkTo}}
                     {{/each}}
                 </div>
             </div>
             <div class="col-md-8">
-                {{outlet}} KEY PART
+                {{outlet}}
             </div>
         </div>
+    </script>
+
+
+    <script type="text/x-handlebars" id="bucket/key">
+        <h1>{{keyName}}</h1>
+        <div class="panel panel-body">
+            {{value}}
+        </div>
+        <button action="doEdit">Edit</button>
     </script>
 
 </head>
