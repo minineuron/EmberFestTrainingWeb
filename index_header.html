@@ -10,6 +10,7 @@
     <script type="text/javascript" charset="utf-8" src="js/scripts/handlebars.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/scripts/ember-1.0.0-rc.7.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/scripts/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/scripts/bootstrap-modal.js" ></script>
 
 
     <script type="text/x-handlebars" id="application">
@@ -27,8 +28,13 @@
     		<div class="pageContent">
     			<img src="/images/header_logo.png" />
     		</div>
+            <div class="pull-right">
+                <button class="btn btn-default headerButton" data-toggle="modal" data-target="#newBucketModal">Create Bucket</button> <br />
+                <button class="btn btn-default headerButton" data-toggle="modal" data-target="#newKeyModal">Create Key</button>
+            </div>
+        </div>
 
-    	</div>
+
 
     </script>
     <script type="text/x-handlebars" id="buckets">
@@ -45,6 +51,33 @@
         <div class="col-md-8">
             {{outlet}}
         </div>
+
+
+        <div class="modal fade" id="newBucketModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Create new Bucket</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>New Bucket name:</label>
+                                {{input valueBinding="newBucketName" classNames="form-control"}}
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action "addBucket"}}>Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+
     </script>
 
 
@@ -60,20 +93,49 @@
                         {{/linkTo}}
                     {{/each}}
                 </div>
+                <button {{action deleteBucket}} class="btn">Delete</button>
             </div>
             <div class="col-md-8">
                 {{outlet}}
             </div>
         </div>
+
+        <div class="modal fade" id="newKeyModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Create new Key</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>New Key name:</label>
+                                {{input valueBinding="newKeyName" classNames="form-control"}}
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action "addKey"}}>Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </script>
 
 
     <script type="text/x-handlebars" id="bucket/key">
         <h1>{{keyName}}</h1>
-        <div class="panel panel-body">
-            {{value}}
-        </div>
-        <button action="doEdit">Edit</button>
+        {{#if isEditing}}
+           {{textarea valueBinding="value" classNames=""}}
+            <button {{action doSave}}>Save</button>
+        {{else}}
+            <div class="panel panel-body">
+                {{value}}
+            </div>
+            <button class="btn btn-default" {{action "doEdit"}}>Edit</button>
+        {{/if}}
     </script>
 
 </head>
